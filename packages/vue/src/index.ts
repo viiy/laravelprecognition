@@ -9,7 +9,7 @@ export const useForm = <Data extends Record<string, unknown>>(method: RequestMet
     /**
      * The original data.
      */
-    const originalData = cloneDeep(inputs)
+    let originalData = cloneDeep(inputs)
 
     /**
      * The original input names.
@@ -173,6 +173,19 @@ export const useForm = <Data extends Record<string, unknown>>(method: RequestMet
         },
         validator() {
             return validator
+        },
+        newInputs(inputs) {
+          originalData = cloneDeep(inputs);
+          form.reset();
+          return form;
+        },
+        dirty(...names) {
+          if (names.length === 0) {
+            return originalInputs.some((name) => form[name] !== originalData[name]);
+          } else {
+            throw Error('Not implemented');
+            // return originalInputs.reduce((car, name) => [...car, ...form[name] !== originalData[name] ? ['name'] : []], []);
+          }
         },
     }
 

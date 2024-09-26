@@ -19,4 +19,6 @@ export interface Form<Data extends Record<string, unknown>> {
     reset(...keys: (keyof Partial<Data>)[]): Data & Form<Data>,
     validateFiles(): Data & Form<Data>,
     validator(): Validator,
+    newInputs(inputs: Data): Data & Form<Data>,
+    dirty(...keys: (keyof Partial<Data>)[]): boolean,
 }
